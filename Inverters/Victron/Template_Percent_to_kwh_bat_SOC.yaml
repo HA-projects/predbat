@@ -1,0 +1,7 @@
+# Battery SOC in Kwh ((!! You need to create a helper for the bat capacity "multiplus_battery_max_charge")))
+    multiplus_battery_soc_kwh:
+      friendly_name: 'Mulitplus Battery SOC in kWh'
+      value_template: "{{ (states('sensor.battery_state_of_charge') | int(default=0) / 100
+        * states('input_number.multiplus_battery_max_charge') | float(default=0)) | int(default=0) }}"
+      unit_of_measurement: "kWh"
+      device_class: energy
