@@ -18,18 +18,13 @@ ESS means Energy Storage System and does allow the control of the battery usage.
 More Infos -» : [modbus conf](modbus/)
 
 
-Smart EV Charging: Plug with contactor plus control over Renault App
---------------------------------------------------------------------
-
-plus Shelly EM (Energy Meter) for power consumption tracking. 
-
-More Infos -» : [See more](ev-charger/)
 
 
 ## Used HACS apps
 
 - Solcast PV Solar
 - apexcharts-card
+- and more
 
 
 ---
