@@ -1,0 +1,217 @@
+# cat modbus.yaml
+# configuration entry for a TCP connection
+# slave adresses via secrets.yaml
+# com.victronenergy.grid    slave: 30
+# com.victronenergy.system  slave: 100
+# com.victronenergy.battery slave: 225
+
+# system :
+ -  name: victron
+#    delay: 5
+    timeout: 5
+    type: tcp
+    host: 192.168.1.7
+    port: 502
+# REMARK: scan_interval: <5 can cause troubles
+    sensors:
+    - name: 'AC Consumption L1'
+      unit_of_measurement: "W"
+      slave: !secret com.victronenergy.system
+      address: 817
+      data_type: uint16
+#      scan_interval: 4
+      device_class: power
+
+    - name: 'Multiplus Grid power'
+      unit_of_measurement: "W"
+      slave: !secret com.victronenergy.system
+      address: 820
+      data_type: int16
+      scan_interval: 10
+      device_class: power
+
+    - name: 'Multiplus Energy from Grid'
+      unit_of_measurement: "kWh"
+      slave: !secret com.victronenergy.grid
+      address: 2603
+      data_type: uint16
+      scale: 0.01
+      precision: 1
+#      scan_interval: 20
+      device_class: energy
+      state_class: total_increasing
+    - name: 'Multiplus Energy to Grid'
+      unit_of_measurement: "kWh"
+      slave: !secret com.victronenergy.grid
+      address: 2606
+      data_type: uint16
+      scale: 0.01
+      precision: 1
+#      scan_interval: 20
+      device_class: energy
+      state_class: total_increasing
+
+    - name: 'Multiplus Solar power'
+      unit_of_measurement: "W"
+      slave: !secret com.victronenergy.system
+      address: 850
+      data_type: uint16
+      device_class: power
+
+    - name: 'ESS Minimum SoC setpoint'
+      unit_of_measurement: "%"
+      data_type: uint16
+      slave: !secret com.victronenergy.system
+      address: 2901
+#      scan_interval: 5
+      scale: 0.1
+
+    - name: 'Maximum System Grid Feed In'
+      unit_of_measurement: "W"
+      data_type: uint16
+      slave: !secret com.victronenergy.system
+      address: 2706
+      scale: 0.01
+      scan_interval: 60
+      device_class: power
+      # command_on: 4000
+      # command_off: 40
+      # verify_state: false
+#Battery
+    - name: 'Battery current'
+      unit_of_measurement: "A DC"
+      slave: !secret com.victronenergy.system
+      address: 841
+      data_type: int16
+      scale: 0.1
+      precision: 0
+      device_class: current
+
+    - name: 'Multiplus Battery Power'
+      unit_of_measurement: "W"
+      slave: !secret com.victronenergy.system
+      address: 842
+      data_type: int16
+      scale: 1.0
+      precision: 0
+      device_class: power
+
+    - name: 'Multiplus Charge Power'
+      unit_of_measurement: "W"
+      slave: !secret com.victronenergy.system
+      address: 860
+      data_type: int16
+      scale: 10.0
+      precision: 0
+      device_class: power
+
+    - name: 'Multiplus Battery State of Charge'
+      unit_of_measurement: "%"
+      slave: !secret com.victronenergy.system
+      address: 843
+      data_type: uint16
+      scale: 1
+      precision: 0
+
+
+# Victron device over Modbus: Pylontch Battery slave: 225
+    - name: 'Battery current Pylon'
+      unit_of_measurement: "A DC"
+      slave: !secret com.victronenergy.battery
+      address: 261
+      data_type: int16
+      scale: 0.1
+      precision: 0
+      device_class: current
+
+    - name: 'Battery State of Charge'
+      unit_of_measurement: "%"
+      slave: !secret com.victronenergy.battery
+      address: 266
+      data_type: int16
+      scale: 0.1
+      precision: 0
+
+# Victron device over Modbus: vebus
+    - name: 'Multiplus Critical Loads'
+      unit_of_measurement: "W"
+      slave: !secret com.victronenergy.vebus
+      address: 23
+      data_type: int16
+#      scan_interval: 5
+      scale: 10.0
+      precision: 0
+      device_class: power
+
+    - name: 'Grid Voltage L1 in'
+      unit_of_measurement: "V AC"
+      slave: !secret com.victronenergy.vebus
+      address: 3
+      data_type: uint16
+      scale: 0.1
+      offset: 0
+      precision: 2
+      device_class: voltage
+
+    - name: 'Multi Voltage L1 out'
+      unit_of_measurement: "V AC"
+      slave: !secret com.victronenergy.vebus
+      address: 15
+      data_type: uint16
+      scale: 0.1
+      offset: 0
+      precision: 2
+      device_class: voltage
+
+    - name: "Multi Inverter State"
+      slave: !secret com.victronenergy.vebus
+      address: 31
+      data_type: uint16
+      # Inverter States, 0=Off;1=Low Power;2=Fault;3=Bulk;4=Absorption;5=Float;6=Storage;7=Equalize;8=Passthru;9=Inverting;10=Power assist;11=Power supply;252=Bulk protection
+
+# com.victronenergy.solarcharger slave: 247
+    - name: 'Solar Yield today'
+      unit_of_measurement: "kWh"
+      slave: !secret com.victronenergy.solarcharger
+      address: 784
+      data_type: uint16
+      scale: 0.1
+      precision: 1
+      device_class: energy
+
+    - name: 'Solar Yield yesterday'
+      unit_of_measurement: "kWh"
+      slave: !secret com.victronenergy.solarcharger
+      address: 786
+      data_type: uint16
+      scale: 0.1
+      precision: 1
+      device_class: energy
+
+#Alarm Sensors
+    - name: 'Grid lost alarm'
+      slave: !secret com.victronenergy.vebus
+      address: 64
+      data_type: uint16
+      unit_of_measurement: "0=Ok;1=Warning"
+
+    - name: 'Multi Temperature alarm'
+      slave: !secret com.victronenergy.vebus
+      address: 34
+      data_type: uint16
+      unit_of_measurement: "0=Ok;1=Warning;2=Alarm"
+
+    - name: 'Multi Overload alarm'
+      slave: !secret com.victronenergy.vebus
+      address: 36
+      data_type: uint16
+      unit_of_measurement: "0=Ok;1=Warning;2=Alarm"
+
+    - name: 'CCGX Relay Boiler'
+      slave: !secret com.victronenergy.system
+      address: 806
+      data_type: uint16
+      unit_of_measurement: "1=Off;0=Heat"
+
+#### Binary sensors (no binary in victron) ########
+#    binary_sensors:

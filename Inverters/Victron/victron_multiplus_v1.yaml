@@ -73,11 +73,12 @@ pred_bat:
     - sensor.multiplus_solar_power
   load_power:
     - sensor.ac_consumption_l1
-  soc_kw:
-    - multiplus_battery_soc_kwh
-  # you need to create a helper for this value
+  soc_percent:  # or   soc_kw:  in kWh
+    - sensor.battery_state_of_charge
+
+  # Battery capacity in kWh put in a number for this value
   soc_max:
-    - input_number.multiplus_battery_max_charge
+    - 9.6
   charge_limit:
    - 100
   reserve:
