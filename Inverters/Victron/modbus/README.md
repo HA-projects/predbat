@@ -6,21 +6,21 @@ There are two files one for the modbus communication and the other the create di
 Those sensors are needed for Predbat or for the HA Energy dashboard.
 The modbus configuration uses the secret file to store the modbus addresses.
 
-**Use this file secrets.yaml to store secrets like usernames and passwords.**
+**Use the file secrets.yaml to store secrets or reusable variables.**
 
 Learn more at https://www.home-assistant.io/docs/configuration/secrets/
-
+```
+# Use this file to store secrets like usernames and passwords.
+# Learn more at https://www.home-assistant.io/docs/configuration/secrets/
 logger: debug
-
 some_password: welcome
-
-**Victron Energy Modbus Slave adresses**
-* com.victronenergy.grid: 30
-* com.victronenergy.system: 100
-* com.victronenergy.battery: 225 #245
-* com.victronenergy.vebus: 246  #242
-* com.victronenergy.solarcharger: 247 # en 100 ?
-
+# Victron Energy Modbus Slave adresses
+com.victronenergy.grid: 30
+com.victronenergy.system: 100
+com.victronenergy.battery: 225 #245
+com.victronenergy.vebus: 246  #242
+com.victronenergy.solarcharger: 247 # en 100 ?
+```
 
 ---
 
