@@ -2,9 +2,10 @@ Victron Energy Multiplus connected via modbus 🚀️
 ============================
 
 
-There are two files one for the modbus communication and the other the create different sensor out of this data. 
-Those sensors are needed for Predbat or for the HA Energy dashboard.
-The modbus configuration uses the secret file to store the modbus addresses.
+There are two files one for the modbus communication and the other to create different sensor out of this data. 
+Those template sensors are needed for Predbat or for the HA Energy dashboard.
+
+The modbus configuration uses the secrets file to store the modbus addresses.
 
 **Use the file secrets.yaml to store secrets or reusable variables.**
 
@@ -27,5 +28,4 @@ com.victronenergy.solarcharger: 247 # en 100 ?
 DISCLAIMER
 ----------
 
-***This setup  can be used in your projects by you own risk. Or you can just take some inspiration from it.
-The Node-Red automations (flows) are relative complex and all this is still a work in progress and may have still some edges and bugs.***
+***This setup  can be used in your projects by you own risk.***
